@@ -445,9 +445,27 @@ class PatternConverter {
     }
 
     parseSVGPatternPieces(svg) {
-        // TODO: Implement SVG pattern piece extraction
-        console.log("Parsing SVG pattern pieces:", svg);
-        return [];
+        // Extract pattern pieces from SVG
+        const patternPieces = [];
+        const svgElement = SVG(svg);
+        const groups = svgElement.find('g[data-piece-type="panel"]');
+
+        groups.forEach(group => {
+            const id = group.attr('id');
+            const name = group.attr('data-piece-name');
+            const path = group.find('path')[0];
+
+            if (id && name && path) {
+                patternPieces.push({
+                    id: id,
+                    name: name,
+                    path: path.attr('d')
+                });
+            }
+        });
+
+        console.log("Parsing SVG pattern pieces:", patternPieces);
+        return patternPieces;
     }
 
     extractMeasurements(svg) {
