@@ -474,9 +474,55 @@ class PatternConverter {
     }
 
     extractMeasurements(svg) {
-        // TODO: Implement measurement extraction
-        console.log("Extracting measurements:", svg);
-        return {};
+        // Extract measurement data from SVG
+        const measurements = {};
+        try {
+            const svgElement = SVG(svg);
+
+            // Extract from metadata
+            const metadata = svgElement.find('metadata')[0];
+            if (metadata) {
+                const egoMeasurements = metadata.find('ego\\:measurements')[0];
+                if (egoMeasurements) {
+                    egoMeasurements.find('ego\\:piece').forEach(piece => {
+                        const pieceName = piece.attr('name');
+                        measurements[pieceName] = {};
+                        piece.find('ego\\:measurement').forEach(measurement => {
+                            const name = measurement.attr('name');
+                            const value = measurement.attr('value');
+                            const unit = measurement.attr('unit');
+                            measurements[pieceName][name] = `${value} ${unit}`;
+                        });
+                    });
+                }
+            }
+
+            // Extract from data attributes
+            svgElement.find('[data-measurement]').forEach(element => {
+                const name = element.attr('data-measurement');
+                const value = element.attr('data-value');
+                const unit = element.attr('data-unit');
+                measurements[name] = `${value} ${unit}`;
+            });
+
+            // Extract from text elements
+            svgElement.find('text').forEach(textElement => {
+                const text = textElement.text();
+                const match = text.match(/(\w+):\s*([\d\.]+)\s*(\w+)/);
+                if (match) {
+                    const name = match[1];
+                    const value = match[2];
+                    const unit = match[3];
+                    measurements[name] = `${value} ${unit}`;
+                }
+            });
+
+            console.log("Extracting measurements:", measurements);
+            return measurements;
+        } catch (error) {
+            console.error("Error extracting measurements:", error);
+            return {};
+        }
     }
 
     createPatternPieceMesh(pathData, measurements) {
