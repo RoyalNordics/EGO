@@ -1,0 +1,159 @@
+{
+  "templateName": "Standard Tote Bag",
+  "description": "Standard measurements for a medium-sized tote bag",
+  "version": "1.0.0",
+  "lastUpdated": "2025-03-26",
+  "pieces": [
+    {
+      "name": "Front Panel",
+      "measurements": [
+        {
+          "name": "Width",
+          "value": 40,
+          "unit": "cm",
+          "description": "Width of the front panel at the top"
+        },
+        {
+          "name": "Height",
+          "value": 35,
+          "unit": "cm",
+          "description": "Height from bottom to top of the front panel"
+        },
+        {
+          "name": "Bottom Width",
+          "value": 40,
+          "unit": "cm",
+          "description": "Width of the front panel at the bottom"
+        }
+      ]
+    },
+    {
+      "name": "Back Panel",
+      "measurements": [
+        {
+          "name": "Width",
+          "value": 40,
+          "unit": "cm",
+          "description": "Width of the back panel at the top"
+        },
+        {
+          "name": "Height",
+          "value": 35,
+          "unit": "cm",
+          "description": "Height from bottom to top of the back panel"
+        },
+        {
+          "name": "Bottom Width",
+          "value": 40,
+          "unit": "cm",
+          "description": "Width of the back panel at the bottom"
+        }
+      ]
+    },
+    {
+      "name": "Side Panel",
+      "measurements": [
+        {
+          "name": "Width",
+          "value": 15,
+          "unit": "cm",
+          "description": "Width of the side panel at the top"
+        },
+        {
+          "name": "Height",
+          "value": 35,
+          "unit": "cm",
+          "description": "Height from bottom to top of the side panel"
+        },
+        {
+          "name": "Bottom Width",
+          "value": 15,
+          "unit": "cm",
+          "description": "Width of the side panel at the bottom"
+        }
+      ]
+    },
+    {
+      "name": "Bottom Panel",
+      "measurements": [
+        {
+          "name": "Length",
+          "value": 40,
+          "unit": "cm",
+          "description": "Length of the bottom panel (front to back)"
+        },
+        {
+          "name": "Width",
+          "value": 15,
+          "unit": "cm",
+          "description": "Width of the bottom panel (side to side)"
+        }
+      ]
+    },
+    {
+      "name": "Handle",
+      "measurements": [
+        {
+          "name": "Length",
+          "value": 50,
+          "unit": "cm",
+          "description": "Total length of the handle"
+        },
+        {
+          "name": "Width",
+          "value": 3,
+          "unit": "cm",
+          "description": "Width of the handle"
+        },
+        {
+          "name": "Attachment Distance",
+          "value": 10,
+          "unit": "cm",
+          "description": "Distance from the edge of the panel to the handle attachment point"
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Exterior Fabric",
+      "thickness": 0.3,
+      "unit": "cm",
+      "description": "Main exterior fabric (canvas, leather, etc.)"
+    },
+    {
+      "name": "Lining Fabric",
+      "thickness": 0.2,
+      "unit": "cm",
+      "description": "Interior lining fabric"
+    },
+    {
+      "name": "Interfacing",
+      "thickness": 0.1,
+      "unit": "cm",
+      "description": "Structural interfacing for stability"
+    }
+  ],
+  "assembly": [
+    {
+      "description": "Attach front panel to bottom panel",
+      "pieces": ["Front Panel", "Bottom Panel"],
+      "edge": "bottom"
+    },
+    {
+      "description": "Attach back panel to bottom panel",
+      "pieces": ["Back Panel", "Bottom Panel"],
+      "edge": "bottom"
+    },
+    {
+      "description": "Attach side panels to front, back, and bottom panels",
+      "pieces": ["Side Panel", "Front Panel", "Back Panel", "Bottom Panel"],
+      "edge": "sides"
+    },
+    {
+      "description": "Attach handles to front and back panels",
+      "pieces": ["Handle", "Front Panel", "Back Panel"],
+      "edge": "top"
+    }
+  ]
+}
