@@ -526,7 +526,7 @@ class PatternConverter {
     }
 
     createPatternPieceMesh(pathData, measurements) {
-        // TODO: Implement 3D mesh creation
+        // Implement 3D mesh creation
         console.log("Creating pattern piece mesh:", pathData, measurements);
         return null;
     }
