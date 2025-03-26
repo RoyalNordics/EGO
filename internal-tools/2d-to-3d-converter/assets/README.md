@@ -4,7 +4,7 @@ This directory contains assets used by the 2D to 3D Bag Pattern Converter tool.
 
 ## Contents
 
-- Sample SVG patterns for testing
+- `samples/` - Sample SVG patterns for testing (see samples/README.md for details)
 - Icons and UI elements
 - Other static assets
 
@@ -30,11 +30,11 @@ SVG patterns should follow these guidelines:
    - Circle elements
    - data-attachment-point attributes
 
-Sample SVG patterns will be added to this directory as they are created.
+Sample SVG patterns will be added to the `samples/` directory as they are created.
 
 ## Document Maintenance
 
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Last Updated**: March 26, 2025  
 **Update Frequency**: As needed  
 
@@ -50,6 +50,7 @@ Sample SVG patterns will be added to this directory as they are created.
 | Date | Version | Changes | Author |
 |------|---------|---------|--------|
 | March 26, 2025 | 1.0.0 | Initial version | EGO Development Team |
+| March 26, 2025 | 1.1.0 | Added samples directory and README | EGO Development Team |
 
 ### Review Checklist
 - [ ] Contents section accurately reflects directory contents
