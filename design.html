@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Your Handbag - EGO</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>EGO</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="design.html">Design Your Bag</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#quality">Quality</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="design-hero">
+        <div class="container">
+            <h2>Design Your Own Handbag</h2>
+            <p>Follow the steps below to create your unique, personalized handbag.</p>
+        </div>
+    </section>
+
+    <section class="design-process">
+        <div class="container">
+            <div class="design-container">
+                <div class="design-sidebar">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" id="progress-bar"></div>
+                            <div class="step-indicator active" data-step="1">1</div>
+                            <div class="step-indicator" data-step="2">2</div>
+                            <div class="step-indicator" data-step="3">3</div>
+                            <div class="step-indicator" data-step="4">4</div>
+                            <div class="step-indicator" data-step="5">5</div>
+                            <div class="step-indicator" data-step="6">6</div>
+                        </div>
+                    </div>
+                    <div class="step-description">
+                        <h3 id="step-title">Step 1: Choose Base Design</h3>
+                        <p id="step-info">Select the basic shape and style for your handbag.</p>
+                    </div>
+                    <div class="price-summary">
+                        <h3>Price Summary</h3>
+                        <div class="price-details">
+                            <div class="price-item">
+                                <span>Base Design:</span>
+                                <span id="base-price">0 kr</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Handle:</span>
+                                <span id="handle-price">0 kr</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Material:</span>
+                                <span id="material-price">0 kr</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Fittings:</span>
+                                <span id="fittings-price">0 kr</span>
+                            </div>
+                            <div class="price-total">
+                                <span>Total:</span>
+                                <span id="total-price">0 kr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="design-main">
+                    <div class="design-preview">
+                        <div class="preview-container">
+                            <img id="bag-preview" src="images/preview-placeholder.png" alt="Bag preview">
+                            <div class="preview-overlay">
+                                <p>Live Preview</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="design-options">
+                        <!-- Step 1: Base Design -->
+                        <div class="step-content active" id="step-1">
+                            <div class="options-grid">
+                                <div class="option-item" data-value="tote" data-price="1200">
+                                    <img src="images/designs/tote.png" alt="Tote Bag">
+                                    <h4>Tote Bag</h4>
+                                    <p>1200 kr</p>
+                                </div>
+                                <div class="option-item" data-value="crossbody" data-price="1400">
+                                    <img src="images/designs/crossbody.png" alt="Crossbody Bag">
+                                    <h4>Crossbody Bag</h4>
+                                    <p>1400 kr</p>
+                                </div>
+                                <div class="option-item" data-value="clutch" data-price="1000">
+                                    <img src="images/designs/clutch.png" alt="Clutch Bag">
+                                    <h4>Clutch Bag</h4>
+                                    <p>1000 kr</p>
+                                </div>
+                                <div class="option-item" data-value="shoulder" data-price="1500">
+                                    <img src="images/designs/shoulder.png" alt="Shoulder Bag">
+                                    <h4>Shoulder Bag</h4>
+                                    <p>1500 kr</p>
+                                </div>
+                                <div class="option-item" data-value="backpack" data-price="1800">
+                                    <img src="images/designs/backpack.png" alt="Backpack">
+                                    <h4>Backpack</h4>
+                                    <p>1800 kr</p>
+                                </div>
+                                <div class="option-item" data-value="hobo" data-price="1600">
+                                    <img src="images/designs/hobo.png" alt="Hobo Bag">
+                                    <h4>Hobo Bag</h4>
+                                    <p>1600 kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Handle Type -->
+                        <div class="step-content" id="step-2">
+                            <div class="options-grid">
+                                <div class="option-item" data-value="short" data-price="200">
+                                    <img src="images/handles/short.png" alt="Short Handle">
+                                    <h4>Short Handle</h4>
+                                    <p>200 kr</p>
+                                </div>
+                                <div class="option-item" data-value="long" data-price="300">
+                                    <img src="images/handles/long.png" alt="Long Handle">
+                                    <h4>Long Handle</h4>
+                                    <p>300 kr</p>
+                                </div>
+                                <div class="option-item" data-value="chain" data-price="400">
+                                    <img src="images/handles/chain.png" alt="Chain Handle">
+                                    <h4>Chain Handle</h4>
+                                    <p>400 kr</p>
+                                </div>
+                                <div class="option-item" data-value="leather-strap" data-price="350">
+                                    <img src="images/handles/leather-strap.png" alt="Leather Strap">
+                                    <h4>Leather Strap</h4>
+                                    <p>350 kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Material -->
+                        <div class="step-content" id="step-3">
+                            <div class="options-grid">
+                                <div class="option-item" data-value="leather" data-price="500">
+                                    <img src="images/materials/leather.png" alt="Leather">
+                                    <h4>Premium Leather</h4>
+                                    <p>500 kr</p>
+                                </div>
+                                <div class="option-item" data-value="suede" data-price="600">
+                                    <img src="images/materials/suede.png" alt="Suede">
+                                    <h4>Suede</h4>
+                                    <p>600 kr</p>
+                                </div>
+                                <div class="option-item" data-value="canvas" data-price="300">
+                                    <img src="images/materials/canvas.png" alt="Canvas">
+                                    <h4>Canvas</h4>
+                                    <p>300 kr</p>
+                                </div>
+                                <div class="option-item" data-value="vegan-leather" data-price="450">
+                                    <img src="images/materials/vegan-leather.png" alt="Vegan Leather">
+                                    <h4>Vegan Leather</h4>
+                                    <p>450 kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: Colors -->
+                        <div class="step-content" id="step-4">
+                            <div class="color-section">
+                                <h3>Bag Color</h3>
+                                <div class="color-options">
+                                    <div class="color-option" data-value="black" style="background-color: #000000;"></div>
+                                    <div class="color-option" data-value="brown" style="background-color: #8B4513;"></div>
+                                    <div class="color-option" data-value="navy" style="background-color: #000080;"></div>
+                                    <div class="color-option" data-value="red" style="background-color: #B22222;"></div>
+                                    <div class="color-option" data-value="green" style="background-color: #006400;"></div>
+                                    <div class="color-option" data-value="beige" style="background-color: #F5F5DC;"></div>
+                                    <div class="color-option" data-value="pink" style="background-color: #FF69B4;"></div>
+                                    <div class="color-option" data-value="purple" style="background-color: #800080;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="color-section">
+                                <h3>Handle Color</h3>
+                                <div class="color-options">
+                                    <div class="color-option" data-value="black" style="background-color: #000000;"></div>
+                                    <div class="color-option" data-value="brown" style="background-color: #8B4513;"></div>
+                                    <div class="color-option" data-value="navy" style="background-color: #000080;"></div>
+                                    <div class="color-option" data-value="red" style="background-color: #B22222;"></div>
+                                    <div class="color-option" data-value="green" style="background-color: #006400;"></div>
+                                    <div class="color-option" data-value="beige" style="background-color: #F5F5DC;"></div>
+                                    <div class="color-option" data-value="pink" style="background-color: #FF69B4;"></div>
+                                    <div class="color-option" data-value="purple" style="background-color: #800080;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 5: Fittings & Details -->
+                        <div class="step-content" id="step-5">
+                            <div class="options-grid">
+                                <div class="option-item" data-value="gold-zipper" data-price="150">
+                                    <img src="images/fittings/gold-zipper.png" alt="Gold Zipper">
+                                    <h4>Gold Zipper</h4>
+                                    <p>150 kr</p>
+                                </div>
+                                <div class="option-item" data-value="silver-zipper" data-price="150">
+                                    <img src="images/fittings/silver-zipper.png" alt="Silver Zipper">
+                                    <h4>Silver Zipper</h4>
+                                    <p>150 kr</p>
+                                </div>
+                                <div class="option-item" data-value="gold-clasp" data-price="200">
+                                    <img src="images/fittings/gold-clasp.png" alt="Gold Clasp">
+                                    <h4>Gold Clasp</h4>
+                                    <p>200 kr</p>
+                                </div>
+                                <div class="option-item" data-value="silver-clasp" data-price="200">
+                                    <img src="images/fittings/silver-clasp.png" alt="Silver Clasp">
+                                    <h4>Silver Clasp</h4>
+                                    <p>200 kr</p>
+                                </div>
+                                <div class="option-item" data-value="tassel" data-price="100">
+                                    <img src="images/fittings/tassel.png" alt="Tassel">
+                                    <h4>Tassel</h4>
+                                    <p>100 kr</p>
+                                </div>
+                                <div class="option-item" data-value="charm" data-price="120">
+                                    <img src="images/fittings/charm.png" alt="Charm">
+                                    <h4>Charm</h4>
+                                    <p>120 kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 6: Review & Order -->
+                        <div class="step-content" id="step-6">
+                            <div class="review-container">
+                                <h3>Your Design Summary</h3>
+                                <div class="review-details">
+                                    <div class="review-item">
+                                        <span>Base Design:</span>
+                                        <span id="review-base">Not selected</span>
+                                    </div>
+                                    <div class="review-item">
+                                        <span>Handle Type:</span>
+                                        <span id="review-handle">Not selected</span>
+                                    </div>
+                                    <div class="review-item">
+                                        <span>Material:</span>
+                                        <span id="review-material">Not selected</span>
+                                    </div>
+                                    <div class="review-item">
+                                        <span>Bag Color:</span>
+                                        <span id="review-bag-color">Not selected</span>
+                                    </div>
+                                    <div class="review-item">
+                                        <span>Handle Color:</span>
+                                        <span id="review-handle-color">Not selected</span>
+                                    </div>
+                                    <div class="review-item">
+                                        <span>Fittings:</span>
+                                        <span id="review-fittings">Not selected</span>
+                                    </div>
+                                    <div class="review-item total">
+                                        <span>Total Price:</span>
+                                        <span id="review-total">0 kr</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="delivery-info">
+                                    <h3>Delivery Information</h3>
+                                    <p>Your custom-designed handbag will be delivered within 14 days.</p>
+                                    <p>You will receive updates on your order status via email.</p>
+                                </div>
+                                
+                                <div class="order-actions">
+                                    <button id="save-design" class="btn btn-secondary">Save Design</button>
+                                    <button id="place-order" class="btn btn-primary">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
+                        <button id="next-btn" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>EGO</h3>
+                    <p>Creating unique, personalized handbags that reflect your individual style.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design Your Bag</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#quality">Quality</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> info@egocustombags.com</li>
+                        <li><i class="fas fa-phone"></i> +45 12 34 56 78</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EGO Custom Bags. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/design.js"></script>
+</body>
+</html>

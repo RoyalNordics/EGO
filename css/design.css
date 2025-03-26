@@ -1,0 +1,365 @@
+/* Design Page Styles */
+
+/* Design Hero Section */
+.design-hero {
+    padding: 150px 0 50px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.design-hero h2 {
+    margin-bottom: 20px;
+}
+
+.design-hero p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+}
+
+/* Design Process Section */
+.design-process {
+    padding: 50px 0 100px;
+    background-color: #fff;
+}
+
+.design-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Design Sidebar */
+.design-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.progress-container {
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    position: relative;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    background-color: var(--primary-color);
+    width: 0%;
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.step-indicator.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.step-indicator.completed {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.step-description {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.step-description h3 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.step-description p {
+    margin-bottom: 0;
+}
+
+.price-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.price-summary h3 {
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+.price-details {
+    font-size: 0.95rem;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.price-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #ddd;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Design Main Area */
+.design-main {
+    flex: 1;
+}
+
+.design-preview {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.preview-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#bag-preview {
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.design-options {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+}
+
+/* Options Grid */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.option-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.option-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow);
+}
+
+.option-item.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.option-item img {
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.option-item h4 {
+    margin-bottom: 5px;
+}
+
+.option-item p {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Color Selection */
+.color-section {
+    margin-bottom: 30px;
+}
+
+.color-section h3 {
+    margin-bottom: 15px;
+}
+
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #ddd;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: var(--dark-color);
+    box-shadow: 0 0 0 2px var(--dark-color);
+}
+
+/* Review Step */
+.review-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.review-details {
+    margin-bottom: 30px;
+}
+
+.review-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.review-item.total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-top: 2px solid #ddd;
+    border-bottom: none;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.delivery-info {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.delivery-info h3 {
+    margin-bottom: 15px;
+}
+
+.delivery-info p:last-child {
+    margin-bottom: 0;
+}
+
+.order-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-secondary:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .design-container {
+        flex-direction: column;
+    }
+    
+    .design-sidebar {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    
+    .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .order-actions button {
+        width: 100%;
+    }
+}

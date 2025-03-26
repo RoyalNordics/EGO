@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGO Custom Bags - 3D Viewer Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>EGO Custom Bags - 3D Viewer</h1>
+            <p>Example implementation of 3D bag viewer using Three.js</p>
+        </header>
+
+        <div class="viewer-container">
+            <div class="controls-panel">
+                <h2>Bag Options</h2>
+                
+                <div class="control-group">
+                    <h3>Bag Type</h3>
+                    <select id="bag-type">
+                        <option value="tote">Tote Bag</option>
+                        <option value="crossbody">Crossbody Bag</option>
+                        <option value="clutch">Clutch Bag</option>
+                        <option value="shoulder">Shoulder Bag</option>
+                        <option value="backpack">Backpack</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <h3>Material</h3>
+                    <select id="material-type">
+                        <option value="leather">Premium Leather</option>
+                        <option value="suede">Suede</option>
+                        <option value="canvas">Canvas</option>
+                        <option value="vegan-leather">Vegan Leather</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <h3>Bag Color</h3>
+                    <div class="color-options">
+                        <div class="color-option" data-color="#000000" style="background-color: #000000;"></div>
+                        <div class="color-option" data-color="#8B4513" style="background-color: #8B4513;"></div>
+                        <div class="color-option" data-color="#000080" style="background-color: #000080;"></div>
+                        <div class="color-option" data-color="#B22222" style="background-color: #B22222;"></div>
+                        <div class="color-option" data-color="#006400" style="background-color: #006400;"></div>
+                        <div class="color-option" data-color="#F5F5DC" style="background-color: #F5F5DC;"></div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3>Hardware</h3>
+                    <select id="hardware-type">
+                        <option value="gold">Gold</option>
+                        <option value="silver">Silver</option>
+                        <option value="black">Black</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <h3>View Controls</h3>
+                    <button id="reset-view">Reset View</button>
+                    <button id="toggle-rotation">Toggle Rotation</button>
+                </div>
+            </div>
+            
+            <div class="viewer-panel">
+                <div id="loading-indicator">Loading 3D Model...</div>
+                <canvas id="3d-viewer"></canvas>
+                
+                <div class="view-buttons">
+                    <button data-view="front">Front</button>
+                    <button data-view="back">Back</button>
+                    <button data-view="left">Left</button>
+                    <button data-view="right">Right</button>
+                    <button data-view="top">Top</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h2>About This Example</h2>
+            <p>This is a demonstration of how 3D bag models can be integrated into the EGO Custom Bags website using Three.js. In a production implementation, this viewer would be integrated with the existing design process.</p>
+            
+            <h3>Features Demonstrated:</h3>
+            <ul>
+                <li>Loading and displaying 3D models</li>
+                <li>Changing materials and colors</li>
+                <li>Swapping hardware components</li>
+                <li>Camera controls for different views</li>
+                <li>Interactive rotation and zoom</li>
+            </ul>
+            
+            <h3>Technical Implementation:</h3>
+            <ul>
+                <li>Three.js for 3D rendering</li>
+                <li>glTF format for 3D models</li>
+                <li>Dynamic texture loading</li>
+                <li>Responsive design for different screen sizes</li>
+            </ul>
+            
+            <p><strong>Note:</strong> This example uses placeholder 3D models. In a production environment, these would be replaced with actual bag models created using CLO 3D / Marvelous Designer or a custom solution.</p>
+        </div>
+    </div>
+
+    <!-- Load Three.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <!-- Load our custom JavaScript -->
+    <script src="viewer.js"></script>
+</body>
+</html>
