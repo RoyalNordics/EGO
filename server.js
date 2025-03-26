@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+// Note: When using SVG.js in the server, import it as follows:
+// const { SVG } = require('@svgdotjs/svg.js');
 
 // Create Express app
 const app = express();
@@ -54,8 +56,14 @@ app.use(helmet({
   },
 }));
 
-// Serve static files from the client build directory
-app.use(express.static(path.join(__dirname, 'client/build')));
+// Create public directory if it doesn't exist
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+// Serve static files from the public directory
+app.use(express.static(publicDir));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -115,9 +123,42 @@ apiRouter.post('/convert', (req, res) => {
 // Mount API routes
 app.use('/api', apiRouter);
 
-// Catch-all route to serve the React app
+// Create a simple index.html file if it doesn't exist
+const indexHtmlPath = path.join(publicDir, 'index.html');
+if (!fs.existsSync(indexHtmlPath)) {
+  const indexHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGO 2D to 3D Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #4a90e2; }
+        .container { max-width: 800px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EGO 2D to 3D Converter</h1>
+        <p>This is a placeholder page for the EGO 2D to 3D Converter tool.</p>
+        <p>API endpoints available:</p>
+        <ul>
+            <li><code>/api/upload</code> - Upload SVG files</li>
+            <li><code>/api/convert</code> - Convert SVG to 3D model</li>
+            <li><code>/health</code> - Health check endpoint</li>
+        </ul>
+    </div>
+</body>
+</html>
+  `;
+  fs.writeFileSync(indexHtmlPath, indexHtml);
+}
+
+// Catch-all route to serve the index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(indexHtmlPath);
 });
 
 // Error handling middleware
