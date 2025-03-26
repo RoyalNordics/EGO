@@ -198,7 +198,7 @@ class PatternConverter {
                 this.svgDraw = SVG().addTo(this.svgContainer).size('100%', '100%');
                 this.svgDraw.svg(fileContent);
                 this.analyzeImage(fileContent, file.type);
-            } else if (file.type === 'image/png') {
+            } else if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/webp') {
                 // Create an image element
                 const img = new Image();
                 img.onload = () => {
@@ -233,6 +233,64 @@ class PatternConverter {
             this.updateStatus('File loaded');
         };
         reader.readAsDataURL(file);
+    }
+
+    displayDetectedPatterns(patternPieces) {
+        // Clear the pieces panel
+        this.piecesPanel.innerHTML = '';
+
+        // Add each detected piece
+        patternPieces.forEach(piece => {
+            const pieceItem = document.createElement('div');
+            pieceItem.className = 'piece-item';
+            pieceItem.textContent = piece.name;
+
+            // Add click event
+            pieceItem.addEventListener('click', () => {
+                // Toggle selected class
+                document.querySelectorAll('.piece-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                pieceItem.classList.add('selected');
+
+                // Update status
+                this.updateStatus(`Selected piece: ${piece.name}`);
+
+                // Highlight the piece in the SVG viewer
+                this.highlightPiece(piece.id);
+            });
+
+            // Add to the panel
+            this.piecesPanel.appendChild(pieceItem);
+        });
+    }
+
+    updateMeasurements(measurements) {
+        // Clear the measurements panel
+        this.measurementsPanel.innerHTML = '';
+
+        // Add each measurement
+        measurements.forEach(measurement => {
+            const measurementItem = document.createElement('div');
+            measurementItem.className = 'measurement-item';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = measurement.name;
+
+            const valueSpan = document.createElement('span');
+            valueSpan.textContent = `${measurement.value} ${measurement.unit}`;
+
+            measurementItem.appendChild(nameSpan);
+            measurementItem.appendChild(valueSpan);
+
+            // Add to the panel
+            this.measurementsPanel.appendChild(measurementItem);
+        });
+    }
+
+    generateModelFromSVG(svg) {
+        // TODO: Implement 3D model generation from SVG
+        console.log("Generating 3D model from SVG:", svg);
     }
 
 
@@ -439,9 +497,45 @@ class PatternConverter {
     }
     
     analyzeImage(fileContent, fileType) {
-        // Analyze the image
-        console.log("Analyzing image:", fileContent, fileType);
-        this.updateStatus('Image analyzed');
+        this.updateStatus('Analyzing image...');
+
+        const img = new Image();
+        img.src = fileContent;
+
+        img.onload = async () => {
+            // Create a canvas to draw the image
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            // Analyze the image
+            const result = await this.imageAnalyzer.analyzeImage(canvas);
+
+            // Display the detected pattern pieces
+            this.displayDetectedPatterns(result.patternPieces);
+
+            // Update the SVG viewer with the generated SVG
+            this.svgContainer.innerHTML = '';
+            this.svgDraw = SVG().addTo(this.svgContainer).size('100%', '100%');
+            this.svgDraw.svg(result.svg);
+
+            // Add the pattern to the list
+            this.addPatternToList('Detected Pattern');
+
+            // Update measurements
+            this.updateMeasurements(result.measurements);
+
+            // Generate 3D model
+            this.generateModelFromSVG(result.svg);
+
+            this.updateStatus('Image analysis complete');
+        };
+
+        img.onerror = () => {
+            this.updateStatus('Error loading image');
+        };
     }
 
     parseSVGPatternPieces(svg) {
