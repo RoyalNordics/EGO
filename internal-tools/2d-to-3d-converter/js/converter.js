@@ -447,24 +447,29 @@ class PatternConverter {
     parseSVGPatternPieces(svg) {
         // Extract pattern pieces from SVG
         const patternPieces = [];
-        const svgElement = SVG(svg);
-        const groups = svgElement.find('g[data-piece-type="panel"]');
+        try {
+            const svgElement = SVG(svg);
+            const groups = svgElement.find('g[data-piece-type="panel"]');
 
-        groups.forEach(group => {
-            const id = group.attr('id');
-            const name = group.attr('data-piece-name');
-            const path = group.find('path')[0];
+            groups.forEach(group => {
+                const id = group.attr('id');
+                const name = group.attr('data-piece-name');
+                const path = group.find('path')[0];
 
-            if (id && name && path) {
-                patternPieces.push({
-                    id: id,
-                    name: name,
-                    path: path.attr('d')
-                });
-            }
-        });
+                if (id && name && path) {
+                    patternPieces.push({
+                        id: id,
+                        name: name,
+                        path: path.attr('d')
+                    });
+                }
+            });
 
-        console.log("Parsing SVG pattern pieces:", patternPieces);
+            console.log("Parsing SVG pattern pieces:", patternPieces);
+        } catch (error) {
+            console.error("Error parsing SVG:", error);
+            this.updateStatus("Error parsing SVG: " + error.message);
+        }
         return patternPieces;
     }
 
