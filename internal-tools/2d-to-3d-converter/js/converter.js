@@ -474,7 +474,7 @@ class PatternConverter {
     }
 
     extractMeasurements(svg) {
-        // Extract measurement data from SVG
+        // Extract measurement data from SVG - TEST
         const measurements = {};
         try {
             const svgElement = SVG(svg);
