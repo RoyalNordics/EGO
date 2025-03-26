@@ -1,5 +1,7 @@
 // EGO - 2D to 3D Bag Pattern Converter
 
+import { ImageAnalyzer } from './image-analyzer.js';
+
 // Main class for the converter application
 class PatternConverter {
     constructor() {
@@ -8,11 +10,16 @@ class PatternConverter {
         this.modelContainer = document.getElementById('model-container');
         this.patternList = document.getElementById('pattern-list');
         this.measurementsPanel = document.getElementById('measurements-panel');
+        this.widthInput = document.getElementById('width');
+        this.heightInput = document.getElementById('height');
+        this.depthInput = document.getElementById('depth');
+        this.handleLengthInput = document.getElementById('handleLength');
         this.piecesPanel = document.getElementById('pieces-panel');
         this.statusBar = document.querySelector('.status-bar');
         
         // Button elements
         this.importSvgBtn = document.getElementById('import-svg');
+        this.svgFile = document.getElementById('svg-file');
         this.newProjectBtn = document.getElementById('new-project');
         this.saveProjectBtn = document.getElementById('save-project');
         this.exportModelBtn = document.getElementById('export-model');
@@ -25,6 +32,9 @@ class PatternConverter {
         
         // SVG.js components
         this.svgDraw = null;
+
+        // Image analyzer
+        this.imageAnalyzer = new ImageAnalyzer();
         
         // Application state
         this.currentProject = {
@@ -51,13 +61,19 @@ class PatternConverter {
         
         // Update status
         this.updateStatus('Ready');
+
+        // Update 3D model when measurements change
+        this.widthInput.addEventListener('change', () => this.generateSample3DModel());
+        this.heightInput.addEventListener('change', () => this.generateSample3DModel());
+        this.depthInput.addEventListener('change', () => this.generateSample3DModel());
+        this.handleLengthInput.addEventListener('change', () => this.generateSample3DModel());
     }
     
     // Set up event listeners
     setupEventListeners() {
         // Import SVG button
         this.importSvgBtn.addEventListener('click', () => {
-            this.importSVG();
+            this.svgFile.click();
         });
         
         // New project button
@@ -73,6 +89,14 @@ class PatternConverter {
         // Export model button
         this.exportModelBtn.addEventListener('click', () => {
             this.exportModel();
+        });
+
+        // SVG file input
+        this.svgFile.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                this.loadSVG(file);
+            }
         });
     }
     
@@ -157,30 +181,65 @@ class PatternConverter {
         this.renderer.setSize(this.modelContainer.clientWidth, this.modelContainer.clientHeight);
     }
     
+
+    // Load SVG file
+    loadSVG(file) {
+        this.updateStatus('Loading file...');
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const fileContent = event.target.result;
+
+            // Clear the SVG container
+            this.svgContainer.innerHTML = '';
+
+            if (file.type === 'image/svg+xml') {
+                // Create a new SVG.js drawing
+                this.svgDraw = SVG().addTo(this.svgContainer).size('100%', '100%');
+                this.svgDraw.svg(fileContent);
+                this.analyzeImage(fileContent, file.type);
+            } else if (file.type === 'image/png') {
+                // Create an image element
+                const img = new Image();
+                img.onload = () => {
+                    // Create a canvas element
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Get the 2D rendering context
+                    const ctx = canvas.getContext('2d');
+
+                    // Draw the image on the canvas
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                    // Append the canvas to the SVG container
+                    this.svgContainer.appendChild(canvas);
+                    this.analyzeImage(fileContent, file.type);
+                };
+                img.src = fileContent;
+            } else {
+                alert('Unsupported file type');
+                return;
+            }
+
+            // Add the pattern to the list
+            this.addPatternToList(file.name);
+
+            // Generate a sample 3D model
+            this.generateSample3DModel();
+
+            // Update status
+            this.updateStatus('File loaded');
+        };
+        reader.readAsDataURL(file);
+    }
+
+
     // Import SVG file
     importSVG() {
-        // This is a placeholder for the actual implementation
-        // In a real implementation, we would use a file input or drag-and-drop
-        
-        // For now, we'll simulate loading an SVG
-        this.updateStatus('Loading SVG...');
-        
-        // Clear the SVG container
-        this.svgDraw.clear();
-        
-        // Create a sample rectangle
-        const rect = this.svgDraw.rect(200, 100).fill('#4a90e2').move(50, 50);
-        
-        // Add the pattern to the list
-        this.addPatternToList('Sample Pattern');
-        
-        // Generate a sample 3D model
-        this.generateSample3DModel();
-        
-        // Update status
-        this.updateStatus('SVG loaded');
+        this.svgFile.click();
     }
-    
     // Add a pattern to the list
     addPatternToList(name) {
         // Clear the "No patterns loaded" message
@@ -281,15 +340,20 @@ class PatternConverter {
     
     // Generate a sample 3D model
     generateSample3DModel() {
+        // Get the measurements from the input fields
+        const width = parseFloat(this.widthInput.value);
+        const height = parseFloat(this.heightInput.value);
+        const depth = parseFloat(this.depthInput.value);
+
         // Clear existing models
         this.scene.children.forEach(child => {
             if (child instanceof THREE.Mesh) {
                 this.scene.remove(child);
             }
         });
-        
+
         // Create a simple box geometry
-        const geometry = new THREE.BoxGeometry(2, 1, 0.5);
+        const geometry = new THREE.BoxGeometry(width, height, depth);
         const material = new THREE.MeshStandardMaterial({
             color: 0x4a90e2,
             roughness: 0.7,
@@ -299,9 +363,8 @@ class PatternConverter {
         // Create mesh and add to scene
         const mesh = new THREE.Mesh(geometry, material);
         this.scene.add(mesh);
-        
         // Reset camera position
-        this.camera.position.set(0, 0, 3);
+        this.camera.position.set(0, 0, Math.max(width, height, depth) * 1.5);
         this.controls.update();
     }
     
@@ -310,36 +373,40 @@ class PatternConverter {
         // Confirm with user
         if (confirm('Create a new project? Any unsaved changes will be lost.')) {
             // Reset current project
-            this.currentProject = {
-                name: 'Untitled Project',
-                patterns: [],
-                measurements: [],
-                pieces: []
-            };
-            
-            // Clear SVG viewer
-            this.svgDraw.clear();
-            this.svgDraw.text('Import an SVG pattern to begin').move(20, 20);
-            
-            // Clear pattern list
-            this.patternList.innerHTML = '<p>No patterns loaded</p>';
-            
-            // Clear measurements panel
-            this.measurementsPanel.innerHTML = '<p>No measurements available</p>';
-            
-            // Clear pieces panel
-            this.piecesPanel.innerHTML = '<p>No pattern pieces available</p>';
-            
-            // Clear 3D scene
-            this.scene.children.forEach(child => {
-                if (child instanceof THREE.Mesh) {
-                    this.scene.remove(child);
-                }
-            });
-            
-            // Update status
-            this.updateStatus('New project created');
+            this.resetProject();
         }
+    }
+
+    resetProject() {
+        this.currentProject = {
+            name: 'Untitled Project',
+            patterns: [],
+            measurements: [],
+            pieces: []
+        };
+        
+        // Clear SVG viewer
+        this.svgDraw.clear();
+        this.svgDraw.text('Import an SVG pattern to begin').move(20, 20);
+        
+        // Clear pattern list
+        this.patternList.innerHTML = '<p>No patterns loaded</p>';
+        
+        // Clear measurements panel
+        this.measurementsPanel.innerHTML = '<p>No measurements available</p>';
+        
+        // Clear pieces panel
+        this.piecesPanel.innerHTML = '<p>No pattern pieces available</p>';
+        
+        // Clear 3D scene
+        this.scene.children.forEach(child => {
+            if (child instanceof THREE.Mesh) {
+                this.scene.remove(child);
+            }
+        });
+        
+        // Update status
+        this.updateStatus('New project created');
     }
     
     // Save the current project
@@ -369,6 +436,12 @@ class PatternConverter {
     // Update the status bar
     updateStatus(message) {
         this.statusBar.textContent = message;
+    }
+    
+    analyzeImage(fileContent, fileType) {
+        // Analyze the image
+        console.log("Analyzing image:", fileContent, fileType);
+        this.updateStatus('Image analyzed');
     }
 }
 

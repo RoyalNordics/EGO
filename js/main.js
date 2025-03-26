@@ -1,5 +1,5 @@
 // js/main.js
-import { generateBagFromSVG } from './bag_generator.js';
+import { generateBagFromSVG, analyzeImage } from './bag_generator.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const scene = new THREE.Scene();
@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
+
+  // Analyze an image
+  const image = new Image();
+  image.src = 'images/designs/tote.png.html';
+  image.onload = () => {
+    const patternPieces = analyzeImage(image);
+    console.log(patternPieces);
+  };
 
   // Generate a bag from an SVG
   generateBagFromSVG('svg/tote_front_path.svg')

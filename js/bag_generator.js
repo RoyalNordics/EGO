@@ -58,4 +58,10 @@ function pathDataToPoints(pathData) {
   return [];
 }
 
-export { generateBagFromSVG };
+function analyzeImage(image) {
+  // TODO: Implement the logic to analyze the image and identify the different pattern pieces
+  // For now, just return an empty array
+  return [];
+}
+
+export { generateBagFromSVG, analyzeImage };
