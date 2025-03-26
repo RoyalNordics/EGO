@@ -291,6 +291,24 @@ class PatternConverter {
     generateModelFromSVG(svg) {
         // TODO: Implement 3D model generation from SVG
         console.log("Generating 3D model from SVG:", svg);
+
+        const patternPieces = this.parseSVGPatternPieces(svg);
+
+        // Clear existing models
+        this.scene.children.forEach(child => {
+            if (child instanceof THREE.Mesh) {
+                this.scene.remove(child);
+            }
+        });
+
+        // Create 3D meshes for each pattern piece
+        patternPieces.forEach(piece => {
+            const mesh = this.createPatternPieceMesh(piece.path);
+            this.scene.add(mesh);
+        });
+
+        // Assemble pattern pieces
+        this.assemblePatternPieces(this.scene.children);
     }
 
 
