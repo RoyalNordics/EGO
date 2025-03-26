@@ -532,8 +532,13 @@ class PatternConverter {
     }
 
     assemblePatternPieces(pieces) {
-        // TODO: Implement pattern piece assembly
+        // Implement pattern piece assembly
         console.log("Assembling pattern pieces:", pieces);
+
+        // For now, just add all pieces to the scene at the origin
+        pieces.forEach(piece => {
+            this.scene.add(piece);
+        });
     }
 }
 
