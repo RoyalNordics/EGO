@@ -56,14 +56,9 @@ app.use(helmet({
   },
 }));
 
-// Create public directory if it doesn't exist
-const publicDir = path.join(__dirname, 'public');
-if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir, { recursive: true });
-}
-
-// Serve static files from the public directory
-app.use(express.static(publicDir));
+// Serve static files from the ego-platform/ui/public directory
+const uiPublicDir = path.join(__dirname, 'ego-platform', 'ui', 'public');
+app.use(express.static(uiPublicDir));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -98,20 +93,35 @@ apiRouter.post('/upload', upload.single('svg'), (req, res) => {
 apiRouter.post('/convert', (req, res) => {
   try {
     const { svgPath } = req.body;
-    
+
     if (!svgPath) {
       return res.status(400).json({ error: 'SVG path is required' });
     }
-    
-    // This is a placeholder for the actual conversion logic
-    // In a real implementation, this would call the SVG parsing and 3D model generation code
-    
-    res.status(200).json({
-      message: 'Conversion successful',
-      model: {
-        id: `model-${Date.now()}`,
-        preview: '/api/preview/sample.png',
-        download: '/api/download/sample.glb'
+
+    // Load the SVG file
+    fs.readFile(svgPath, 'utf8', async (err, svgData) => {
+      if (err) {
+        console.error('Error reading SVG file:', err);
+        return res.status(500).json({ error: 'Failed to read SVG file' });
+      }
+
+      try {
+        // Call the SVG parsing and 3D model generation code
+        const { generateBagFromSVG } = require('./js/bag_generator');
+        const result = await generateBagFromSVG(svgPath);
+
+        res.status(200).json({
+          message: 'Conversion successful',
+          model: {
+            id: `model-${Date.now()}`,
+            preview: '/api/preview/sample.png', // TODO: Generate preview image
+            download: '/api/download/sample.glb', // TODO: Generate GLB file
+            data: result // Include the result data
+          }
+        });
+      } catch (error) {
+        console.error('Error converting SVG:', error);
+        res.status(500).json({ error: 'Failed to convert SVG to 3D model' });
       }
     });
   } catch (error) {
@@ -123,43 +133,10 @@ apiRouter.post('/convert', (req, res) => {
 // Mount API routes
 app.use('/api', apiRouter);
 
-// Create a simple index.html file if it doesn't exist
-const indexHtmlPath = path.join(publicDir, 'index.html');
-if (!fs.existsSync(indexHtmlPath)) {
-  const indexHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EGO 2D to 3D Converter</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #4a90e2; }
-        .container { max-width: 800px; margin: 0 auto; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>EGO 2D to 3D Converter</h1>
-        <p>This is a placeholder page for the EGO 2D to 3D Converter tool.</p>
-        <p>API endpoints available:</p>
-        <ul>
-            <li><code>/api/upload</code> - Upload SVG files</li>
-            <li><code>/api/convert</code> - Convert SVG to 3D model</li>
-            <li><code>/health</code> - Health check endpoint</li>
-        </ul>
-    </div>
-</body>
-</html>
-  `;
-  fs.writeFileSync(indexHtmlPath, indexHtml);
-}
-
 // Catch-all route to serve the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(indexHtmlPath);
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(indexHtmlPath);
+// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {

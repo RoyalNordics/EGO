@@ -155,15 +155,35 @@ class SVGGenerator {
             group.appendChild(measurementsGroup);
         }
         
+        
         // Add attachment points (placeholder)
-        // TODO: Implement attachment point detection and visualization
+        const attachmentPoint1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        attachmentPoint1.setAttribute('cx', piece.boundingBox.x + 50);
+        attachmentPoint1.setAttribute('cy', piece.boundingBox.y + 50);
+        attachmentPoint1.setAttribute('r', this.options.attachmentPointRadius);
+        attachmentPoint1.setAttribute('fill', this.options.attachmentPointFill);
+        group.appendChild(attachmentPoint1);
+
+        const attachmentPoint2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        attachmentPoint2.setAttribute('cx', piece.boundingBox.x + piece.boundingBox.width - 50);
+        attachmentPoint2.setAttribute('cy', piece.boundingBox.y + 50);
+        attachmentPoint2.setAttribute('r', this.options.attachmentPointRadius);
+        attachmentPoint2.setAttribute('fill', this.options.attachmentPointFill);
+        group.appendChild(attachmentPoint2);
         
         // Add stitching lines (placeholder)
-        // TODO: Implement stitching line detection and visualization
+        const stitchingLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        stitchingLine.setAttribute('x1', piece.boundingBox.x);
+        stitchingLine.setAttribute('y1', piece.boundingBox.y + piece.boundingBox.height);
+        stitchingLine.setAttribute('x2', piece.boundingBox.x + piece.boundingBox.width);
+        stitchingLine.setAttribute('y2', piece.boundingBox.y + piece.boundingBox.height);
+        stitchingLine.setAttribute('stroke', this.options.stitchingStroke);
+        stitchingLine.setAttribute('stroke-width', this.options.stitchingStrokeWidth);
+        stitchingLine.setAttribute('stroke-dasharray', this.options.stitchingStrokeDasharray);
+        group.appendChild(stitchingLine);
         
         return group;
     }
-    
     /**
      * Generate a group element for measurements
      * @param {Object} piece - Pattern piece object

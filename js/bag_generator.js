@@ -1,51 +1,29 @@
 // js/bag_generator.js
-function generateBagFromSVG(svgPath) {
+async function generateBagFromSVG(svgPath) {
   return new Promise((resolve, reject) => {
-    SVG.on(document).ready(function() {
-      SVG.load(svgPath, function(svg) {
-        // Get the path element from the SVG
-        const path = svg.findOne('path');
+    SVG.on(document).ready(async function() {
+      SVG.load(svgPath, async function(svg) {
+        try {
+          const patternPieces = await parseSVGPatternPieces(svg);
+          const measurements = await extractMeasurements(svg);
 
-        if (path) {
-          // Get the path data from the path element
-          const pathData = path.attr('d');
-
-          // Convert the path data to a 3D shape using Three.js
-          const shape = new THREE.Shape();
-          const points = pathDataToPoints(pathData);
-          for (let i = 0; i < points.length; i++) {
-            const point = points[i];
-            if (i === 0) {
-              shape.moveTo(point.x, point.y);
-            } else {
-              shape.lineTo(point.x, point.y);
-            }
+          const meshes = {};
+          for (const pieceId in patternPieces) {
+            const pathData = patternPieces[pieceId];
+            meshes[pieceId] = await createPatternPieceMesh(pathData, measurements);
           }
 
-          const geometry = new THREE.ShapeGeometry(shape);
-          const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-          const mesh = new THREE.Mesh(geometry, material);
-          resolve(mesh);
-        } else {
-          // Get the rect element from the SVG
-          const rect = svg.findOne('rect');
+          const assembledPieces = await assemblePatternPieces(meshes);
 
-          // Get the width and height from the rect element
-          const width = rect.attr('width');
-          const height = rect.attr('height');
-
-          // Create a 3D shape using Three.js
-          const shape = new THREE.Shape();
-          shape.moveTo(0, 0);
-          shape.lineTo(width, 0);
-          shape.lineTo(width, height);
-          shape.lineTo(0, height);
-          shape.lineTo(0, 0);
-
-          const geometry = new THREE.ShapeGeometry(shape);
-          const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-          const mesh = new THREE.Mesh(geometry, material);
-          resolve(mesh);
+          resolve({
+            meshes: assembledPieces,
+            measurements: measurements,
+            metadata: {
+              svgPath: svgPath
+            }
+          });
+        } catch (error) {
+          reject(error);
         }
       });
     });
@@ -56,6 +34,26 @@ function pathDataToPoints(pathData) {
   // TODO: Implement the logic to convert the path data to an array of points
   // For now, just return an empty array
   return [];
+}
+
+async function parseSVGPatternPieces(svg) {
+  // TODO: Implement the logic to extract pattern pieces from the SVG
+  return {};
+}
+
+async function extractMeasurements(svg) {
+  // TODO: Implement the logic to extract measurement data from the SVG
+  return {};
+}
+
+async function createPatternPieceMesh(pathData, measurements) {
+  // TODO: Implement the logic to create a 3D mesh for a pattern piece
+  return new THREE.Mesh();
+}
+
+async function assemblePatternPieces(pieces) {
+  // TODO: Implement the logic to position pieces in 3D space
+  return pieces;
 }
 
 function analyzeImage(image) {

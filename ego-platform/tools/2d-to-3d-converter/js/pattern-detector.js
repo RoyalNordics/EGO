@@ -104,9 +104,44 @@ class PatternDetector {
      * @returns {Array} - Updated pattern pieces with hole information
      */
     detectHoles(img, patternPieces) {
-        // TODO: Implement hole detection
-        // This would find internal contours that represent holes in the pattern pieces
+        for (const piece of patternPieces) {
+            const mask = cv.Mat.zeros(img.rows, img.cols, cv.CV_8U);
+            cv.drawContours(mask, [piece.contour], 0, new cv.Scalar(255), cv.FILLED);
+
+            const hierarchy = new cv.Mat();
+            const holeContours = new cv.MatVector();
+            cv.findContours(mask, holeContours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE);
+
+            for (let i = 0; i < holeContours.size(); ++i) {
+                const holeContour = holeContours.get(i);
+                const holeArea = cv.contourArea(holeContour);
+
+                // Filter small holes
+                if (holeArea > 100) {
+                    piece.holes = piece.holes || [];
+                    piece.holes.push({
+                        points: this.getContourPoints(holeContour),
+                        area: holeArea
+                    });
+                }
+                holeContour.delete();
+            }
+            hierarchy.delete();
+            holeContours.delete();
+            mask.delete();
+        }
         return patternPieces;
+    }
+
+    getContourPoints(contour) {
+        const points = [];
+        for (let j = 0; j < contour.data32S.length; j += 2) {
+            points.push({
+                x: contour.data32S[j],
+                y: contour.data32S[j + 1]
+            });
+        }
+        return points;
     }
     
     /**
