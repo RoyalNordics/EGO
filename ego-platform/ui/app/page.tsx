@@ -30,10 +30,22 @@ import ProjectSettings from "@/components/project-settings"
 import MeasurementSummary from "@/components/measurement-summary"
 import DesignSummary from "@/components/design-summary";
 
+interface Measurements {
+  topWidth: string;
+  bottomWidth: string;
+  topDepth: string;
+  bottomDepth: string;
+  height: string;
+  openingWidth: string;
+  materialThickness: string;
+  bagModel?: string;
+  materials?: string[];
+}
+
 export default function BagPatternConverter() {
   const [showMeasurementPanel, setShowMeasurementPanel] = useState(true);
   const [activeTab, setActiveTab] = useState("editor");
-  const [measurements, setMeasurements] = useState({
+  const [measurements, setMeasurements] = useState<Measurements>({
     topWidth: "",
     bottomWidth: "",
     topDepth: "",
@@ -47,7 +59,7 @@ export default function BagPatternConverter() {
   const [materials, setMaterials] = useState(["Canvas", "Leather"]);
   const [isConverting, setIsConverting] = useState(false);
 
-  const handleMeasurementsChange = (newMeasurements, field = "") => {
+  const handleMeasurementsChange = (newMeasurements: Measurements, field = "") => {
     setMeasurements(newMeasurements);
     if (newMeasurements.bagModel) {
       setBagModel(newMeasurements.bagModel);
@@ -107,7 +119,7 @@ export default function BagPatternConverter() {
           <Button variant="outline" size="icon" title="Export 3D Model">
             <FileDown className="h-4 w-4" />
           </Button>
-          <Button variant="outline" size="icon" onClick={convertTo3D} disabled={isConverting}>
+          <Button variant="outline"  onClick={convertTo3D} disabled={isConverting}>
             {isConverting ? "Converting..." : "Convert to 3D"}
           </Button>
           <div className="h-4 w-px bg-border mx-1" />
