@@ -56,9 +56,8 @@ app.use(helmet({
   },
 }));
 
-// Serve static files from the ego-platform/ui/public directory
-const uiPublicDir = path.join(__dirname, 'ego-platform', 'ui', 'public');
-app.use(express.static(uiPublicDir));
+// Serve static files from the root directory
+app.use(express.static(__dirname));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -135,7 +134,7 @@ app.use('/api', apiRouter);
 
 // Catch-all route to serve the index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(uiPublicDir, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Error handling middleware
