@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
@@ -32,16 +32,18 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
     height: "",
     openingWidth: "",
     materialThickness: "",
-  })
+  });
+  const [bagModel, setBagModel] = useState("Tote Bag");
+  const [materials, setMaterials] = useState(["Canvas", "Leather"]);
 
   // Update parent component when measurements change
   useEffect(() => {
     if (onMeasurementsChange) {
-      onMeasurementsChange(measurements)
+      onMeasurementsChange({ ...measurements, bagModel, materials });
     }
-  }, [measurements, onMeasurementsChange])
+  }, [measurements, bagModel, materials, onMeasurementsChange])
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field, value) => {
     const updatedMeasurements = {
       ...measurements,
       [field]: value,
@@ -50,7 +52,7 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
 
     // Pass both the updated measurements and the active field
     if (onMeasurementsChange) {
-      onMeasurementsChange(updatedMeasurements, field)
+      onMeasurementsChange({ ...updatedMeasurements, bagModel, materials }, field)
     }
   }
 
@@ -275,7 +277,7 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
                       id={guidedSteps[currentStep].field}
                       type="number"
                       placeholder="0"
-                      value={measurements[guidedSteps[currentStep].field as keyof typeof measurements]}
+                      value={measurements[guidedSteps[currentStep].field]}
                       onChange={(e) => handleInputChange(guidedSteps[currentStep].field, e.target.value)}
                       className="flex-1"
                       style={{
@@ -331,7 +333,7 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
                                 <span className="font-medium">{step.title}</span>
                               </div>
                             </TableCell>
-                            <TableCell>{measurements[step.field as keyof typeof measurements] || "-"} mm</TableCell>
+                            <TableCell>{measurements[step.field] || "-"} mm</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -357,6 +359,40 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
                   <AccordionTrigger className="text-sm font-medium">Bag Dimensions</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-3 pt-1">
+                      <div className="space-y-2">
+                        <Label htmlFor="all-bag-model" className="text-xs">
+                          Bag Model
+                        </Label>
+                        <Select defaultValue={bagModel} onValueChange={(value) => setBagModel(value)}>
+                          <SelectTrigger id="all-bag-model">
+                            <SelectValue placeholder="Select bag model" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Tote Bag">Tote Bag</SelectItem>
+                            <SelectItem value="Backpack">Backpack</SelectItem>
+                            <SelectItem value="Clutch">Clutch</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="all-materials" className="text-xs">
+                          Materials
+                        </Label>
+                        <Select defaultValue={materials.join(",")} onValueChange={(value) => setMaterials(value.split(","))}>
+                          <SelectTrigger id="all-materials">
+                            <SelectValue placeholder="Select materials" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Canvas,Leather">Canvas, Leather</SelectItem>
+                            <SelectItem value="Leather,Suede">Leather, Suede</SelectItem>
+                            <SelectItem value="Canvas">Canvas</SelectItem>
+                            <SelectItem value="Leather">Leather</SelectItem>
+                            <SelectItem value="Suede">Suede</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
                       {/* Front Panel Measurements (Red) */}
                       <div className="p-2 rounded-md" style={{ backgroundColor: `${PANEL_COLORS.front}10` }}>
                         <div className="flex items-center gap-2 mb-2">
@@ -639,4 +675,3 @@ export default function MeasurementPanel({ onMeasurementsChange }) {
     </div>
   )
 }
-

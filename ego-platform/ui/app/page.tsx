@@ -47,7 +47,13 @@ export default function BagPatternConverter() {
   const [materials, setMaterials] = useState(["Canvas", "Leather"]);
 
   const handleMeasurementsChange = (newMeasurements, field = "") => {
-    setMeasurements(newMeasurements)
+    setMeasurements(newMeasurements);
+    if (newMeasurements.bagModel) {
+      setBagModel(newMeasurements.bagModel);
+    }
+    if (newMeasurements.materials) {
+      setMaterials(newMeasurements.materials);
+    }
     if (field) {
       setActiveField(field)
     }
@@ -201,4 +207,3 @@ export default function BagPatternConverter() {
     </div>
   )
 }
-
