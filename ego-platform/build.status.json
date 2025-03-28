@@ -1,5 +1,5 @@
 {
-  "completed": ["Create system files", "Create design-summary component", "Pass bagModel and materials to DesignSummary"],
-  "current_task": "Pass bagModel and materials to DesignSummary",
+  "completed": ["Create system files", "Create design-summary component", "Pass bagModel and materials to DesignSummary", "Connect bagModel and materials to MeasurementPanel"],
+  "current_task": "Connect bagModel and materials to MeasurementPanel",
   "next_step": "UI-integration (v0 output)"
 }
