@@ -56,8 +56,14 @@ app.use(helmet({
   },
 }));
 
-// Serve static files from the root directory
-app.use(express.static(__dirname));
+// Create public directory if it doesn't exist
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+// Serve static files from the public directory
+app.use(express.static(publicDir));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -134,7 +140,7 @@ app.use('/api', apiRouter);
 
 // Catch-all route to serve the index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Error handling middleware
