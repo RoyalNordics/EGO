@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Analyze an image
   const image = new Image();
-  image.src = 'images/designs/tote.png.html';
+  image.src = 'images/designs/tote.png';
   image.onload = () => {
     const patternPieces = analyzeImage(image);
     console.log(patternPieces);
