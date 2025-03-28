@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   scene.add(cube);
 
   // Analyze an image
-  const image = new Image();
-  image.src = 'images/designs/tote.png';
-  image.onload = () => {
-    const patternPieces = analyzeImage(image);
-    console.log(patternPieces);
-  };
+  // const image = new Image();
+  // image.src = 'images/designs/tote.png';
+  // image.onload = () => {
+  //   const patternPieces = analyzeImage(image);
+  //   console.log(patternPieces);
+  // };
 
   // Generate a bag from an SVG
   generateBagFromSVG('svg/tote_front_path.svg')
