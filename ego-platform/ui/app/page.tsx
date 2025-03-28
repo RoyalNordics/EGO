@@ -28,6 +28,7 @@ import StatusBar from "@/components/status-bar"
 import TemplateManager from "@/components/template-manager"
 import ProjectSettings from "@/components/project-settings"
 import MeasurementSummary from "@/components/measurement-summary"
+import DesignSummary from "@/components/design-summary";
 
 export default function BagPatternConverter() {
   const [showMeasurementPanel, setShowMeasurementPanel] = useState(true)
@@ -40,8 +41,10 @@ export default function BagPatternConverter() {
     height: "",
     openingWidth: "",
     materialThickness: "",
-  })
-  const [activeField, setActiveField] = useState("")
+  });
+  const [activeField, setActiveField] = useState("");
+  const [bagModel, setBagModel] = useState("Tote Bag");
+  const [materials, setMaterials] = useState(["Canvas", "Leather"]);
 
   const handleMeasurementsChange = (newMeasurements, field = "") => {
     setMeasurements(newMeasurements)
@@ -143,6 +146,9 @@ export default function BagPatternConverter() {
 
                   {/* Measurement Summary at the bottom of the left panel */}
                   <MeasurementSummary measurements={measurements} />
+
+                  {/* Design Summary at the bottom of the left panel */}
+                  <DesignSummary bagModel={bagModel} materials={materials} />
 
                   {showMeasurementPanel && (
                     <div className="w-64 border-l bg-background overflow-y-auto">
