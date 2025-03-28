@@ -2,6 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const app = express();
 const port = process.env.PORT || 3000;
+const { spawn } = require('child_process');
 
 app.use(express.json());
 
@@ -41,6 +42,37 @@ app.get('/track', (req, res) => {
 
 app.get('/config', (req, res) => {
   res.json({ message: 'Config endpoint' });
+});
+
+app.post('/convert', async (req, res) => {
+  try {
+    const { measurements, bagModel, materials } = req.body;
+
+    // Spawn a child process to run the 2D to 3D converter
+    const converterProcess = spawn('node', ['/workspaces/EGO/ego-platform/tools/2d-to-3d-converter/js/converter.js', JSON.stringify({ measurements, bagModel, materials })]);
+
+    let result = '';
+
+    converterProcess.stdout.on('data', (data) => {
+      result += data.toString();
+    });
+
+    converterProcess.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    converterProcess.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+      if (code === 0) {
+        res.json({ message: 'Conversion successful', data: result });
+      } else {
+        res.status(500).json({ error: 'Conversion failed' });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.listen(port, () => {

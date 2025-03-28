@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import {
@@ -31,8 +31,8 @@ import MeasurementSummary from "@/components/measurement-summary"
 import DesignSummary from "@/components/design-summary";
 
 export default function BagPatternConverter() {
-  const [showMeasurementPanel, setShowMeasurementPanel] = useState(true)
-  const [activeTab, setActiveTab] = useState("editor")
+  const [showMeasurementPanel, setShowMeasurementPanel] = useState(true);
+  const [activeTab, setActiveTab] = useState("editor");
   const [measurements, setMeasurements] = useState({
     topWidth: "",
     bottomWidth: "",
@@ -45,6 +45,7 @@ export default function BagPatternConverter() {
   const [activeField, setActiveField] = useState("");
   const [bagModel, setBagModel] = useState("Tote Bag");
   const [materials, setMaterials] = useState(["Canvas", "Leather"]);
+  const [isConverting, setIsConverting] = useState(false);
 
   const handleMeasurementsChange = (newMeasurements, field = "") => {
     setMeasurements(newMeasurements);
@@ -58,6 +59,32 @@ export default function BagPatternConverter() {
       setActiveField(field)
     }
   }
+
+  const convertTo3D = useCallback(async () => {
+    setIsConverting(true);
+    try {
+      // Send the 2D pattern data to the backend
+      const response = await fetch('/api/convert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ measurements, bagModel, materials }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // Handle the 3D model data
+      console.log(data);
+    } catch (error) {
+      console.error("Could not convert 2D to 3D", error);
+    } finally {
+      setIsConverting(false);
+    }
+  }, [measurements, bagModel, materials]);
 
   return (
     <div className="flex flex-col h-screen bg-background">
@@ -79,6 +106,9 @@ export default function BagPatternConverter() {
           </Button>
           <Button variant="outline" size="icon" title="Export 3D Model">
             <FileDown className="h-4 w-4" />
+          </Button>
+          <Button variant="outline" size="icon" title="Convert to 3D" onClick={convertTo3D} disabled={isConverting}>
+            {isConverting ? "Converting..." : "Convert to 3D"}
           </Button>
           <div className="h-4 w-px bg-border mx-1" />
           <Button variant="outline" size="icon" title="Undo">
