@@ -107,7 +107,7 @@ export default function BagPatternConverter() {
           <Button variant="outline" size="icon" title="Export 3D Model">
             <FileDown className="h-4 w-4" />
           </Button>
-          <Button variant="outline" size="icon" title="Convert to 3D" onClick={convertTo3D} disabled={isConverting}>
+          <Button variant="outline" size="icon" onClick={convertTo3D} disabled={isConverting}>
             {isConverting ? "Converting..." : "Convert to 3D"}
           </Button>
           <div className="h-4 w-px bg-border mx-1" />
