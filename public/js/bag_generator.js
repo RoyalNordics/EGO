@@ -31,9 +31,65 @@ async function generateBagFromSVG(svgPath) {
 }
 
 function pathDataToPoints(pathData) {
-  // TODO: Implement the logic to convert the path data to an array of points
-  // For now, just return an empty array
-  return [];
+  // Basic implementation to convert path data to points
+  const points = [];
+  if (pathData) {
+    const commands = pathData.match(/[MmLlHhVvCcSsQqTtAaZz][^MmLlHhVvCcSsQqTtAaZz]*/g);
+    if (commands) {
+      let currentX = 0;
+      let currentY = 0;
+      for (const command of commands) {
+        const type = command[0];
+        const args = command.substring(1).trim().split(/[\s,]+/).map(Number);
+
+        switch (type) {
+          case 'M': // moveto absolute
+            currentX = args[0];
+            currentY = args[1];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'm': // moveto relative
+            currentX += args[0];
+            currentY += args[1];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'L': // lineto absolute
+            currentX = args[0];
+            currentY = args[1];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'l': // lineto relative
+            currentX += args[0];
+            currentY += args[1];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'H': // horizontal lineto absolute
+            currentX = args[0];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'h': // horizontal lineto relative
+            currentX += args[0];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'V': // vertical lineto absolute
+            currentY = args[0];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'v': // vertical lineto relative
+            currentY += args[0];
+            points.push({ x: currentX, y: currentY });
+            break;
+          case 'Z': // closepath
+          case 'z':
+            // closepath is not handled
+            break;
+          default:
+            console.warn('Unsupported path command:', type);
+        }
+      }
+    }
+  }
+  return points;
 }
 
 async function parseSVGPatternPieces(svg) {
