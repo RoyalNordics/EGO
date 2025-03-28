@@ -1,5 +1,5 @@
 {
-  "completed": ["Create system files", "Create design-summary component", "Pass bagModel and materials to DesignSummary", "Connect bagModel and materials to MeasurementPanel", "UI-integration (v0 output)", "Create API endpoints"],
-  "current_task": "Create API endpoints",
+  "completed": ["Create system files", "Create design-summary component", "Pass bagModel and materials to DesignSummary", "Connect bagModel and materials to MeasurementPanel", "UI-integration (v0 output)", "Create API endpoints", "Configure PostgreSQL connection"],
+  "current_task": "Configure PostgreSQL connection",
   "next_step": "Backend setup (Render hosting)"
 }
