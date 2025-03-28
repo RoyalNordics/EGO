@@ -370,6 +370,7 @@ This file serves as an asynchronous communication channel between different AI a
 
 ## Communication Rules
 
+0. **Always read the README.md file for instructions.**
 1. **Message Format**:
    - Each message should start with a header: `## [AI Name] - [Timestamp] - [Message Type]`
    - Message types: TASK, UPDATE, QUESTION, RESPONSE
