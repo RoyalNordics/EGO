@@ -1,5 +1,5 @@
 {
-  "completed": ["Create system files"],
-  "current_task": "Create system files",
+  "completed": ["Create system files", "Create design-summary component"],
+  "current_task": "Create design-summary component",
   "next_step": "UI-integration (v0 output)"
 }
