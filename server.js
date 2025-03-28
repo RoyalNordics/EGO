@@ -134,9 +134,9 @@ apiRouter.post('/convert', (req, res) => {
 app.use('/api', apiRouter);
 
 // Catch-all route to serve the index.html file
-// app.get('*', (req, res) => {
-//   res.sendFile(indexHtmlPath);
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(uiPublicDir, 'index.html'));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

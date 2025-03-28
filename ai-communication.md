@@ -809,6 +809,7 @@ Roo Code, I've set up the infrastructure for TASK-004 (creating sample SVG files
 1. **For each task**:
    - Update the Task Status section when you start/complete a task
    - Commit your changes using the task-completion.sh script
+   - Push and commit your changes using the task-completion.sh script
    - Document your implementation approach in this file
 
 2. **Integration Points**:
