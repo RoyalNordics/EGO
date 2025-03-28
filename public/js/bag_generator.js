@@ -31,61 +31,122 @@ async function generateBagFromSVG(svgPath) {
 }
 
 function pathDataToPoints(pathData) {
-  // Basic implementation to convert path data to points
   const points = [];
   if (pathData) {
-    const commands = pathData.match(/[MmLlHhVvCcSsQqTtAaZz][^MmLlHhVvCcSsQqTtAaZz]*/g);
-    if (commands) {
-      let currentX = 0;
-      let currentY = 0;
-      for (const command of commands) {
-        const type = command[0];
-        const args = command.substring(1).trim().split(/[\s,]+/).map(Number);
+    let currentX = 0;
+    let currentY = 0;
+    let match;
+    const regex = /([MmLlHhVvCcSsQqTtAaZz])([^MmLlHhVvCcSsQqTtAaZz]*)/g;
 
-        switch (type) {
-          case 'M': // moveto absolute
-            currentX = args[0];
-            currentY = args[1];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'm': // moveto relative
-            currentX += args[0];
-            currentY += args[1];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'L': // lineto absolute
-            currentX = args[0];
-            currentY = args[1];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'l': // lineto relative
-            currentX += args[0];
-            currentY += args[1];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'H': // horizontal lineto absolute
-            currentX = args[0];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'h': // horizontal lineto relative
-            currentX += args[0];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'V': // vertical lineto absolute
-            currentY = args[0];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'v': // vertical lineto relative
-            currentY += args[0];
-            points.push({ x: currentX, y: currentY });
-            break;
-          case 'Z': // closepath
-          case 'z':
-            // closepath is not handled
-            break;
-          default:
-            console.warn('Unsupported path command:', type);
-        }
+    while ((match = regex.exec(pathData)) !== null) {
+      const type = match[1];
+      const args = match[2].trim().split(/[\s,]+/).map(Number);
+
+      switch (type) {
+        case 'M': // moveto absolute
+          currentX = args[0];
+          currentY = args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'm': // moveto relative
+          currentX += args[0];
+          currentY += args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'L': // lineto absolute
+          currentX = args[0];
+          currentY = args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'l': // lineto relative
+          currentX += args[0];
+          currentY += args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'H': // horizontal lineto absolute
+          currentX = args[0];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'h': // horizontal lineto relative
+          currentX += args[0];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'V': // vertical lineto absolute
+          currentY = args[0];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'v': // vertical lineto relative
+          currentY += args[0];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'C': // curveto absolute
+          // Not fully implemented, just adding the end point
+          currentX = args[4];
+          currentY = args[5];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'c': // curveto relative
+          // Not fully implemented, just adding the end point
+          currentX += args[4];
+          currentY += args[5];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'S': // shorthand/smooth curveto absolute
+          // Not fully implemented, just adding the end point
+          currentX = args[2];
+          currentY = args[3];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 's': // shorthand/smooth curveto relative
+          // Not fully implemented, just adding the end point
+          currentX += args[2];
+          currentY += args[3];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'Q': // quadratic Bezier curveto absolute
+          // Not fully implemented, just adding the end point
+          currentX = args[2];
+          currentY = args[3];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'q': // quadratic Bezier curveto relative
+          // Not fully implemented, just adding the end point
+          currentX += args[2];
+          currentY += args[3];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'T': // shorthand/smooth quadratic Bezier curveto absolute
+          // Not fully implemented, just adding the end point
+          currentX = args[0];
+          currentY = args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 't': // shorthand/smooth quadratic Bezier curveto relative
+          // Not fully implemented, just adding the end point
+          currentX += args[0];
+          currentY += args[1];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'A': // elliptical Arc absolute
+          // Not fully implemented, just adding the end point
+          currentX = args[5];
+          currentY = args[6];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'a': // elliptical Arc relative
+          // Not fully implemented, just adding the end point
+          currentX += args[5];
+          currentY += args[6];
+          points.push({ x: currentX, y: currentY });
+          break;
+        case 'Z': // closepath
+          // closepath is not handled
+          break;
+        case 'z': // closepath
+          // closepath is not handled
+          break;
+        default:
+          console.warn('Unsupported path command:', type);
       }
     }
   }
