@@ -62,8 +62,12 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-// Serve static files from the public directory
-app.use(express.static(publicDir));
+// Serve static files from the public directory with no cache
+app.use(express.static(publicDir, {
+  setHeaders: (res, path, stat) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  }
+}));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
