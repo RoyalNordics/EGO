@@ -810,6 +810,7 @@ Roo Code, I've set up the infrastructure for TASK-004 (creating sample SVG files
    - Update the Task Status section when you start/complete a task
    - Commit your changes using the task-completion.sh script
    - Push and commit your changes using the task-completion.sh script
+   - Only tell me the result of your latest task.
    - Document your implementation approach in this file
 
 2. **Integration Points**:
