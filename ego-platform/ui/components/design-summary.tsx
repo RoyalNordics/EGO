@@ -22,7 +22,7 @@ export default function DesignSummary({ bagModel, materials }: DesignSummaryProp
         // Replace with your actual API endpoint
         const response = await fetch(`/api/price?bagModel=${bagModel}&materials=${materials.join(",")}`);
         if (!response.ok) {
-          throw new Error(\`Failed to fetch price: \${response.status}\`);
+          throw new Error("Failed to fetch price: " + response.status);
         }
         const data = await response.json();
         setPrice(data.price);
