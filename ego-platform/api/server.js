@@ -1,6 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const { spawn } = require('child_process');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -85,6 +86,44 @@ app.post('/convert', async (req, res) => {
         res.status(500).json({ error: 'Conversion failed' });
       }
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// POST endpoint for creating an order and Stripe session
+app.post('/api/order', async (req, res) => {
+  try {
+    const { designData, price } = req.body;
+
+    // Store the design data in the database (replace with your actual database logic)
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO orders (design_data, total_amount) VALUES ($1, $2) RETURNING id', [designData, price]);
+    const orderId = result.rows[0].id;
+    client.release();
+
+    // Create a Stripe session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Custom Bag Design',
+            },
+            unit_amount: price * 100, // Amount in cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${process.env.NEXT_PUBLIC_API_URL}/order-confirmation?orderId=${orderId}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_API_URL}/cancel`,
+    });
+
+    res.json({ id: session.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
