@@ -2,9 +2,9 @@
   "status": "active",
   "tasks": {
     "004": {
-      "name": "UI Integration",
-      "status": "done"
-    },
+          "name": "UI Integration",
+          "status": "skipped"
+        },
     "005": {
       "name": "API Setup",
       "status": "done"
