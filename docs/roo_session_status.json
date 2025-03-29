@@ -1,0 +1,29 @@
+{
+    "project": "EGO Custom Bags",
+    "status": "Deployment in progress",
+    "current_task": "011 - Deployment",
+    "last_verified": "2025-03-29",
+    "active_branch": "main",
+    "backend_url": "https://ego-fokp.onrender.com",
+    "healthcheck": false,
+    "render_status": "Live - blank output",
+    "todo": [
+      "Tilføj /api/health endpoint i server.js",
+      "Bekræft at API svarer korrekt på https://ego-fokp.onrender.com/api/health",
+      "Validér backend-kode og dependencies (fx manglende 'pg' modul)",
+      "Opsæt miljøvariabler korrekt i .env.production",
+      "Verificér frontend → backend forbindelse"
+    ],
+    "environment": {
+      "SUPABASE_URL": "https://pkuvyqgkjixvtqlgdivq.supabase.co",
+      "SUPABASE_ANON_KEY": "[indsat]",
+      "DATABASE_URL": "postgresql://postgres:Chrismolly7557@db.pkuvyqgkjixvtqlgdivq.supabase.co:5432/postgres",
+      "STRIPE_SECRET_KEY": "sk_test_51R7vkP[...]",
+      "ADMIN_EMAIL": "tfm@royalnordics.com",
+      "ADMIN_PASSWORD": "Chrismolly7557"
+    },
+    "last_commit": "fix: manuelt indsatte Task 011 i masterplanen",
+    "masterplan_file": "docs/roo_build_masterplan.adoc",
+    "generated_by": "ChatGPT Software Architect GPT"
+  }
+  
