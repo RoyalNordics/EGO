@@ -1,15 +1,46 @@
 {
-  "status": "in_progress",
+  "status": "active",
   "tasks": {
-    "004": "pending",
-    "005": "pending",
-    "006": "pending",
-    "007": "pending",
-    "008": "pending",
-    "009": "pending",
-    "010": "pending",
-    "011": "pending",
-    "012": "pending",
-    "013": "pending"
-  }
+    "004": {
+      "name": "UI Integration",
+      "status": "done"
+    },
+    "005": {
+      "name": "API Setup",
+      "status": "done"
+    },
+    "006": {
+      "name": "Business Logic",
+      "status": "done"
+    },
+    "007": {
+      "name": "2D to 3D Integration",
+      "status": "done"
+    },
+    "008": {
+      "name": "Admin UI",
+      "status": "done"
+    },
+    "009": {
+      "name": "Order Tracking",
+      "status": "done"
+    },
+    "010": {
+      "name": "QA & Tests",
+      "status": "done"
+    },
+    "011": {
+      "name": "Deployment",
+      "status": "in_progress"
+    },
+    "012": {
+      "name": "Project Wrap-up",
+      "status": "pending"
+    },
+    "013": {
+      "name": "Structure & Conventions",
+      "status": "pending"
+    }
+  },
+  "current_task": "011"
 }
