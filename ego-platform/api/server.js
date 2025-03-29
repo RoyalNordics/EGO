@@ -1,8 +1,9 @@
 const express = require('express');
 const { Pool } = require('pg');
+const { spawn } = require('child_process');
+
 const app = express();
 const port = process.env.PORT || 3000;
-const { spawn } = require('child_process');
 
 app.use(express.json());
 
@@ -15,6 +16,17 @@ const pool = new Pool({
   port: process.env.PGPORT,
 });
 
+// GET / → Root status check (Render browser fallback)
+app.get('/', (req, res) => {
+  res.send('EGO API is live 🚀');
+});
+
+// GET /api/health → Healthcheck til Roo og Render
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'API is alive and running ✅' });
+});
+
+// GET /designs → Hent alle design-rækker
 app.get('/designs', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -28,6 +40,7 @@ app.get('/designs', async (req, res) => {
   }
 });
 
+// Placeholder endpoints
 app.get('/orders', (req, res) => {
   res.json({ message: 'Orders endpoint' });
 });
@@ -44,12 +57,15 @@ app.get('/config', (req, res) => {
   res.json({ message: 'Config endpoint' });
 });
 
+// POST /convert → Kald 2D→3D konverter som child process
 app.post('/convert', async (req, res) => {
   try {
     const { measurements, bagModel, materials } = req.body;
 
-    // Spawn a child process to run the 2D to 3D converter
-    const converterProcess = spawn('node', ['/workspaces/EGO/ego-platform/tools/2d-to-3d-converter/js/converter.js', JSON.stringify({ measurements, bagModel, materials })]);
+    const converterProcess = spawn('node', [
+      '/workspaces/EGO/ego-platform/tools/2d-to-3d-converter/js/converter.js',
+      JSON.stringify({ measurements, bagModel, materials }),
+    ]);
 
     let result = '';
 
@@ -75,6 +91,7 @@ app.post('/convert', async (req, res) => {
   }
 });
 
+// Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
