@@ -77,4 +77,4 @@ Sikre at hele EGO-systemet er korrekt konfigureret og kan deployes stabilt til p
 === Opdatering:
 - Commit: `011-deploy ✅ Produktion klar og deployet`
 - Tilføj live-links og konfig-detaljer i `system_instructions.md`
-- Marker status som done i `roo.runplan.json`
+=======
