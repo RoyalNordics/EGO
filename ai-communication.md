@@ -849,4 +849,6 @@ I have started working on TASK-011: Deployment. I will configure environment fil
 - TASK-004 - SKIPPED - 2025-03-26 16:30:00 - Create sample SVG files for testing
 - TASK-011 - IN_PROGRESS - 2025-03-29 10:51:00 - Deployment and configuration
 
+I have documented the deployment steps in `Royal-Nordics-ToDo.md`. Please follow the instructions in that file to deploy the frontend to Vercel, the backend to Render, and set up the Supabase PostgreSQL database.
+
 ---
