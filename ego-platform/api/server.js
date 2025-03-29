@@ -16,17 +16,17 @@ const pool = new Pool({
   port: process.env.PGPORT,
 });
 
-// GET / → Root status check (Render browser fallback)
+// Root route for visual confirmation (used by Render)
 app.get('/', (req, res) => {
   res.send('EGO API is live 🚀');
 });
 
-// GET /api/health → Healthcheck til Roo og Render
+// Healthcheck endpoint for Render and Roo
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'API is alive and running ✅' });
 });
 
-// GET /designs → Hent alle design-rækker
+// Example endpoint: fetch all designs
 app.get('/designs', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -57,7 +57,7 @@ app.get('/config', (req, res) => {
   res.json({ message: 'Config endpoint' });
 });
 
-// POST /convert → Kald 2D→3D konverter som child process
+// POST endpoint for 2D → 3D conversion
 app.post('/convert', async (req, res) => {
   try {
     const { measurements, bagModel, materials } = req.body;
