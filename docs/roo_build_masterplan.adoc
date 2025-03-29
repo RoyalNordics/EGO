@@ -1,0 +1,34 @@
+= EGO Build Masterplan for Roo
+:toc:
+:sectnums:
+
+== Overordnet instruks for Roo
+Denne masterplan er den autoritative kilde for hele udviklingen af EGO-platformen. Roo skal betragte dette dokument som et komplet regelsæt og eksekveringsflow. Alt, hvad Roo foretager sig, skal ske med udgangspunkt i denne fil.
+
+=== Principper:
+
+- Roo skal altid kun rapportere **status for den senest afsluttede opgave** i `ai-communication.md`, for at holde loggen fokuseret og overskuelig.
+- Roo må **aldrig gætte** – hvis noget er uklart eller mangler information, skal Roo skrive det i filen `Royal-Nordics-ToDo.md`
+- `Royal-Nordics-ToDo.md` bruges som bindeled til ejer/beslutningstager. Her lister Roo:
+  - Spørgsmål
+  - Afventende beslutninger
+  - Mangel på input, filer eller godkendelser
+- Når brugeren har udført noget i ToDo-filen, skal Roo læse det og forsøge igen
+- Roo skal altid opdatere:
+  - `build.status.json`
+  - `roo.runplan.json`
+  - `ai-communication.md` efter hver opgave
+  - Commits skal ske efter hver opgave: `git add . && git commit -m "[TASK-ID] Beskrivelse" && git push`
+
+== Introduktion
+Dette dokument er Roo's primære køreplan og reference gennem hele udviklingsprocessen af EGO-platformen. Dokumentet fungerer som roadmap, specifikationskilde og processtyring. Roo skal altid starte med at læse denne fil ved opstart eller usikkerhed.
+
+Hver sektion beskriver:
+- Hvad der skal bygges
+- Hvordan det skal gøres
+- Hvilke filer det relaterer til
+- Hvordan status opdateres
+- Hvad Roo skal committe og skrive i `ai-communication.md`
+
+== 004 - Validér og integrér UI-flow
+// ... (indhold fortsætter som tidligere skrevet)
