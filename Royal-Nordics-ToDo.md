@@ -1,28 +1,16 @@
 ## Missing Environment Variables
 
-Please provide the following environment variables:
-
-*   `NEXT_PUBLIC_API_URL` (for bag-pattern-converter 3/.env.production)
-*   `SUPABASE_URL` (for bag-pattern-converter 3/.env.production)
-*   `SUPABASE_ANON_KEY` (for bag-pattern-converter 3/.env.production)
-*   `DATABASE_URL` (for ego-platform/api/.env.production)
-*   `STRIPE_SECRET_KEY` (for ego-platform/api/.env.production)
-*   `SUPABASE_URL` (for ego-platform/api/.env.production)
-*   `SUPABASE_ANON_KEY` (for ego-platform/api/.env.production)
-*   `ADMIN_EMAIL` (for ego-platform/api/.env.production)
-*   `ADMIN_PASSWORD` (for ego-platform/api/.env.production)
-
 ## Frontend Deployment to Vercel
 
 1.  Add the GitHub repository to Vercel.
-2.  In Vercel's "Project Settings", add the environment variables from `bag-pattern-converter 3/.env.production`.
+2.  In Vercel's "Project Settings", add the environment variables from `bag-pattern-converter 3/frontend.env.production`.
 3.  Select `main` as the deploy branch.
 
 ## Backend Deployment to Render
 
 1.  Upload the repository to Render (or Railway).
 2.  Select Node.js as the environment (or the appropriate runtime).
-3.  Configure the environment variables from `ego-platform/api/.env.production`.
+3.  Configure the environment variables from `ego-platform/api/backend.env.production`.
 4.  Set the build command and start command (e.g., `npm run start`).
 
 ## Supabase PostgreSQL Setup
