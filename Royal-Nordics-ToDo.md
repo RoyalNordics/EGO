@@ -24,10 +24,10 @@
 
 ## Task 011 Checklist
 
-*   [ ] Verify that environment variables are injected correctly in both the frontend and backend.
-*   [ ] Ensure that the URL mapping between the frontend and backend is working correctly.
-*   [ ] Verify that CORS rules are set correctly for API calls.
-*   [ ] Ensure that redirects and rewrites are handled correctly (e.g., Next.js config or `_redirects`-fil).
-*   [ ] Set up logging and monitoring (console logs + Sentry/logtail-integration where possible).
-*   [ ] Deploy frontend to Vercel.
-*   [ ] Set up Supabase PostgreSQL database.
+*   [x] Verify that environment variables are injected correctly in both the frontend and backend.
+*   [x] Ensure that the URL mapping between the frontend and backend is working correctly.
+*   [x] Verify that CORS rules are set correctly for API calls.
+*   [x] Ensure that redirects and rewrites are handled correctly (e.g., Next.js config or `_redirects`-fil).
+*   [x] Set up logging and monitoring (console logs + Sentry/logtail-integration where possible).
+*   [x] Deploy frontend to Vercel.
+*   [x] Set up Supabase PostgreSQL database.
