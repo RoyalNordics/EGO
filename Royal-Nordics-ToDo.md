@@ -1,21 +1,5 @@
-## Missing Environment Variables
 
-## Frontend Deployment to Vercel
 
-1.  Add the GitHub repository to Vercel.
-2.  In Vercel's "Project Settings", add the environment variables from `bag-pattern-converter 3/frontend.env.production`.
-3.  Select `main` as the deploy branch.
-
-## Backend Deployment to Render
-
-1.  Upload the repository to Render (or Railway).
-2.  Select Node.js as the environment (or the appropriate runtime).
-3.  Configure the environment variables from `ego-platform/api/backend.env.production`.
-4.  Set the build command and start command (e.g., `npm run start`).
-
-## Supabase PostgreSQL Setup
-
-1.  Create a hosted PostgreSQL database in Supabase.
 2.  Import the SQL schema if necessary.
 
 ## Integration Testing
