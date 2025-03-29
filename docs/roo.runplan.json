@@ -31,7 +31,7 @@
     },
     "011": {
       "name": "Deployment",
-      "status": "in_progress"
+      "status": "done"
     },
     "012": {
       "name": "Project Wrap-up",
@@ -42,5 +42,5 @@
       "status": "pending"
     }
   },
-  "current_task": "011"
+  "current_task": "012"
 }
