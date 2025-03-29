@@ -196,7 +196,9 @@ export default function BagDesigner() {
           <Button variant="outline" disabled>
             Previous
           </Button>
-          <Button disabled={!selectedModel}>Continue</Button>
+          <Button disabled={!selectedModel} asChild>
+                        <a href={`/side-3?modelId=${selectedModel}`}>Continue</a>
+                      </Button>
         </div>
       </footer>
     </div>

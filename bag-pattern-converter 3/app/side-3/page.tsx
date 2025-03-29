@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera, Environment } from "@react-three/drei"
 import { Check, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react"
+import { useSearchParams } from 'next/navigation';
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -14,18 +15,38 @@ import { cn } from "@/lib/utils"
 
 import BagModel from "./bag-model"
 
+interface Materials {
+  body: string;
+  handle: string;
+  hardware: string;
+}
+
+interface Colors {
+  body: string;
+  handle: string;
+}
+
+interface Accessories {
+  premiumZipper: boolean;
+  customEngraving: boolean;
+  logo: boolean;
+  extraPocket: boolean;
+}
+
 export default function BagConfigurator() {
-  const [activePart, setActivePart] = useState("body")
-  const [materials, setMaterials] = useState({
+  const searchParams = useSearchParams();
+  const modelId = searchParams.get('modelId') || null;
+  const [activePart, setActivePart] = useState<"body" | "handle" | "hardware">("body")
+  const [materials, setMaterials] = useState<Materials>({
     body: "leather",
     handle: "leather",
     hardware: "gold",
   })
-  const [colors, setColors] = useState({
+  const [colors, setColors] = useState<Colors>({
     body: "#8B4513",
     handle: "#8B4513",
   })
-  const [accessories, setAccessories] = useState({
+  const [accessories, setAccessories] = useState<Accessories>({
     premiumZipper: false,
     customEngraving: false,
     logo: false,
@@ -53,8 +74,8 @@ export default function BagConfigurator() {
   }
 
   // Update materials
-  const handleMaterialChange = (part, value) => {
-    setMaterials((prev) => {
+  const handleMaterialChange = (part: "body" | "handle" | "hardware", value: string) => {
+    setMaterials((prev: Materials) => {
       const updated = { ...prev, [part]: value }
       setTimeout(updatePrice, 0)
       return updated
@@ -62,13 +83,13 @@ export default function BagConfigurator() {
   }
 
   // Update colors
-  const handleColorChange = (part, value) => {
-    setColors((prev) => ({ ...prev, [part]: value }))
+  const handleColorChange = (part: "body" | "handle", value: string) => {
+    setColors((prev: Colors) => ({ ...prev, [part]: value }))
   }
 
   // Update accessories
-  const handleAccessoryChange = (accessory, checked) => {
-    setAccessories((prev) => {
+  const handleAccessoryChange = (accessory: "premiumZipper" | "customEngraving" | "logo" | "extraPocket", checked: boolean) => {
+    setAccessories((prev: Accessories) => {
       const updated = { ...prev, [accessory]: checked }
       setTimeout(updatePrice, 0)
       return updated
@@ -133,7 +154,7 @@ export default function BagConfigurator() {
             <div>
               <h3 className="text-lg font-medium mb-3">Select Material</h3>
               <RadioGroup
-                value={materials[activePart]}
+                value={(materials as any)[activePart]}
                 onValueChange={(value) => handleMaterialChange(activePart, value)}
                 className="grid grid-cols-3 gap-4"
               >
@@ -145,12 +166,12 @@ export default function BagConfigurator() {
                         htmlFor="leather"
                         className={cn(
                           "flex flex-col items-center gap-2 rounded-lg border-2 border-neutral-200 p-4 hover:border-neutral-300 cursor-pointer",
-                          materials[activePart] === "leather" && "border-primary",
+                          (materials as any)[activePart] === "leather" && "border-primary",
                         )}
                       >
                         <div className="w-full h-24 bg-amber-800 rounded-md"></div>
                         <span>Leather</span>
-                        {materials[activePart] === "leather" && (
+                        {(materials as any)[activePart] === "leather" && (
                           <div className="absolute top-2 right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                             <Check className="h-3 w-3 text-white" />
                           </div>
@@ -164,12 +185,12 @@ export default function BagConfigurator() {
                         htmlFor="suede"
                         className={cn(
                           "flex flex-col items-center gap-2 rounded-lg border-2 border-neutral-200 p-4 hover:border-neutral-300 cursor-pointer",
-                          materials[activePart] === "suede" && "border-primary",
+                          (materials as any)[activePart] === "suede" && "border-primary",
                         )}
                       >
                         <div className="w-full h-24 bg-amber-700 rounded-md"></div>
                         <span>Suede</span>
-                        {materials[activePart] === "suede" && (
+                        {(materials as any)[activePart] === "suede" && (
                           <div className="absolute top-2 right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                             <Check className="h-3 w-3 text-white" />
                           </div>
@@ -183,12 +204,12 @@ export default function BagConfigurator() {
                         htmlFor="canvas"
                         className={cn(
                           "flex flex-col items-center gap-2 rounded-lg border-2 border-neutral-200 p-4 hover:border-neutral-300 cursor-pointer",
-                          materials[activePart] === "canvas" && "border-primary",
+                          (materials as any)[activePart] === "canvas" && "border-primary",
                         )}
                       >
                         <div className="w-full h-24 bg-stone-300 rounded-md"></div>
                         <span>Canvas</span>
-                        {materials[activePart] === "canvas" && (
+                        {(materials as any)[activePart] === "canvas" && (
                           <div className="absolute top-2 right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                             <Check className="h-3 w-3 text-white" />
                           </div>
@@ -270,12 +291,12 @@ export default function BagConfigurator() {
                       <Label>Color Preview</Label>
                       <div
                         className="h-6 w-6 rounded-full border border-neutral-200"
-                        style={{ backgroundColor: colors[activePart] }}
+                        style={{ backgroundColor: (colors as any)[activePart] }}
                       ></div>
                     </div>
                     <input
                       type="color"
-                      value={colors[activePart]}
+                      value={(colors as any)[activePart]}
                       onChange={(e) => handleColorChange(activePart, e.target.value)}
                       className="w-full h-10 cursor-pointer"
                     />
@@ -300,7 +321,7 @@ export default function BagConfigurator() {
                           key={color}
                           className={cn(
                             "h-8 w-8 rounded-full border-2",
-                            colors[activePart] === color ? "border-primary" : "border-neutral-200",
+                            (colors as any)[activePart] === color ? "border-primary" : "border-neutral-200",
                           )}
                           style={{ backgroundColor: color }}
                           onClick={() => handleColorChange(activePart, color)}
@@ -414,4 +435,3 @@ export default function BagConfigurator() {
     </div>
   )
 }
-
